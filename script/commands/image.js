@@ -22,7 +22,7 @@ module.exports.run = async function({ api, event, args }) {
     var num = 0;
     var imgData = [];
     for (var i = 0; i < parseInt(numberSearch); i++) {
-      let path = __dirname + `/cache/${num+=1}.jpg`;
+      let path = __dirname + `/${num+=1}.jpg`;
       let getDown = (await axios.get(`${data[i]}`, { responseType: 'arraybuffer' })).data;
       fs.writeFileSync(path, Buffer.from(getDown, 'utf-8'));
       imgData.push(fs.createReadStream(__dirname + `/cache/${num}.jpg`));
@@ -32,6 +32,6 @@ module.exports.run = async function({ api, event, args }) {
         body: numberSearch + 'Search results for keyword: '+ keySearchs
     }, event.threadID, event.messageID)
     for (let ii = 1; ii < parseInt(numberSearch); ii++) {
-        fs.unlinkSync(__dirname + `/cache/${ii}.jpg`)
+        fs.unlinkSync(__dirname + `/${ii}.jpg`)
     }
 };
