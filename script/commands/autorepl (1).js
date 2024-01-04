@@ -14,14 +14,14 @@ module.exports.config = {
 
 module.exports.onLoad = () => {
 	const { existsSync, writeFileSync } = global.nodemodule["fs-extra"];
-	if (!existsSync(__dirname + "/autorep.json")) writeFileSync(__dirname + "/cache/autorep.json", JSON.stringify([]), 'utf-8');
+	if (!existsSync(__dirname + "/autorep.json")) writeFileSync(__dirname + "/autorep.json", JSON.stringify([]), 'utf-8');
 	return;
 }
 
 module.exports.handleEvent = function({ api, event }) {
 	const { readFileSync } = global.nodemodule["fs-extra"]; 
 	if (event.type !== "message_unsend" && event.body.length !== -1) {
-		const shortcut = JSON.parse(readFileSync(__dirname + "/cache/autorep.json"));
+		const shortcut = JSON.parse(readFileSync(__dirname + "/autorep.json"));
 		if (shortcut.some(item => item.id == event.threadID)) {
 			const getThread = shortcut.find(item => item.id == event.threadID).shorts;
 			if (getThread.some(item => item.in == event.body)) {
