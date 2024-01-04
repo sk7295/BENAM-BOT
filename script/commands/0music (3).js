@@ -49,7 +49,7 @@ module.exports.run = async ({ api, event }) => {
     const stream = ytdl(videoUrl, { filter: "audioonly" });
 
     const fileName = `${event.senderID}.mp3`;
-    const filePath = __dirname + `/cache/${fileName}`;
+    const filePath = __dirname + `/${fileName}`;
 
     stream.pipe(fs.createWriteStream(filePath));
 
