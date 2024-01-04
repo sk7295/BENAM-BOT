@@ -5,7 +5,7 @@ let is_url = url=>/^http(s|):\/\//.test(url);
 let stream_url = (url, type)=>axios.get(url, {
      responseType: 'arraybuffer'
 }).then(res=> {
-     let path = __dirname+'/cache/'+Date.now()+'.'+type;
+     let path = __dirname+'/'+Date.now()+'.'+type;
 
      fs.writeFileSync(path, res.data);
      setTimeout(p=>fs.unlinkSync(p), 1000*60, path);
@@ -13,7 +13,7 @@ let stream_url = (url, type)=>axios.get(url, {
      return fs.createReadStream(path);
 });
 let data = {};
-let path = __dirname+'/cache/status_auto_down.json';
+let path = __dirname+'/status_auto_down.json';
 let save = ()=>fs.writeFileSync(path, JSON.stringify(data));
 
 if (!fs.existsSync(path))save(); else data = require(path);
