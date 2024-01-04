@@ -20,6 +20,9 @@
     "youtube-search-api": "^1.1.0",
 		"yt-search": "^2.10.4",
 		"ytdl-core": "^4.11.5",
-    "usetube": "^2.2.7"
+    "usetube": "^2.2.7",
+	  "fs-extra": "^10.0.0",
+		"googleapis": "^128.0.0",
+		"googlethis": "^1.8.0"
   }
 }
