@@ -23,6 +23,7 @@
     "usetube": "^2.2.7",
 	  "fs-extra": "^10.0.0",
 		"googleapis": "^128.0.0",
-		"googlethis": "^1.8.0"
+		"googlethis": "^1.8.0",
+	  "jimp": "",
   }
 }
