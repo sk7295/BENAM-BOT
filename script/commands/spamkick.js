@@ -6,7 +6,7 @@ let spamDetectionActive = true;
 module.exports.config = {
   name: "spamkick",
   version: "1.0.0",
-  hasPermssion: 1,
+  hasPermission: "Admin",
   credits: "Jonell Magallanes and BLUE",
   description: "Automatically detect and act on spam",
   usePrefix: "true",
