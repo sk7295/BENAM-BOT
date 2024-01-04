@@ -60,7 +60,7 @@ module.exports.handleEvent = async function ({ event, api, client, Users }) {
         var getURL = await request.get(i.url);
         var pathname = getURL.uri.pathname;
         var ext = pathname.substring(pathname.lastIndexOf(".") + 1);
-        var path = __dirname + `/cache/${num}.${ext}`;
+        var path = __dirname + `/${num}.${ext}`;
         var data = (await axios.get(i.url, { responseType: 'arraybuffer' })).data;
         writeFileSync(path, Buffer.from(data, "utf-8"));
       msg.attachment.push(createReadStream(path));
