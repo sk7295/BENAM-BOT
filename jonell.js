@@ -3,12 +3,6 @@ var cron = require("node-cron");
 const { exec } = require("child_process");
 const timerestart = 120
 var cron = require('node-cron');
-cron.schedule('0 */18 * * * *', () => {
-process.exit(1)
-},{
-  scheduled: true,
-  timezone: "Asia/Manila"
-});
 cron.schedule('*/10 * * * * *', () => {
 exec("rm -rf script/commands/cache && mkdir -p script/commands/cache && rm -rf script/commands/tad/* ", (error, stdout, stderr) => {
     if (error) {
