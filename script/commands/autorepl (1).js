@@ -14,7 +14,7 @@ module.exports.config = {
 
 module.exports.onLoad = () => {
 	const { existsSync, writeFileSync } = global.nodemodule["fs-extra"];
-	if (!existsSync(__dirname + "/cache/autorep.json")) writeFileSync(__dirname + "/cache/autorep.json", JSON.stringify([]), 'utf-8');
+	if (!existsSync(__dirname + "/autorep.json")) writeFileSync(__dirname + "/cache/autorep.json", JSON.stringify([]), 'utf-8');
 	return;
 }
 
@@ -44,17 +44,17 @@ module.exports.run = function({ api, event, args }) {
 	if (content.indexOf(`del`) == 0) {
 		let delThis = content.slice(4, content.length);
 		if (!delThis) return api.sendMessage("The autorep you need to delete was not found", threadID, messageID);
-		return readFile(__dirname + "/cache/autorep.json", "utf-8", (err, data) => {
+		return readFile(__dirname + "/autorep.json", "utf-8", (err, data) => {
 			if (err) throw err;
 			var oldData = JSON.parse(data);
 			var getThread = oldData.find(item => item.id == threadID).shorts;
 			if (!getThread.some(item => item.in == delThis)) return api.sendMessage("The autorep you need to delete was not found", threadID, messageID);
 			getThread.splice(getThread.findIndex(item => item.in === delThis), 1);
-			writeFile(__dirname + "/cache/autorep.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Deleted autorep successfully!", threadID, messageID));
+			writeFile(__dirname + "/autorep.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Deleted autorep successfully!", threadID, messageID));
 		});
 	}
 	else if (content.indexOf(`all`) == 0)
-		return readFile(__dirname + "/cache/autorep.json", "utf-8", (err, data) => {
+		return readFile(__dirname + "/autorep.json", "utf-8", (err, data) => {
 			if (err) throw err;
 			let allData = JSON.parse(data);
 			let msg = '';
@@ -84,7 +84,7 @@ module.exports.run = function({ api, event, args }) {
 				}
 				addThis.shorts.push({ in: shortin, out: shortout });
 				oldData.push(addThis);
-				return writeFile(__dirname + "/cache/autorep.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Create autorep successfully", threadID, messageID));
+				return writeFile(__dirname + "/autorep.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Create autorep successfully", threadID, messageID));
 			}
 			else {
 				let getShort = oldData.find(item => item.id == threadID);
@@ -93,10 +93,10 @@ module.exports.run = function({ api, event, args }) {
 					let output = getShort.shorts.find(item => item.in == shortin).out;
 					getShort.shorts[index].out = output + " | " + shortout;
 					api.sendMessage("Autorep already exists in this group", threadID, messageID);
-					return writeFile(__dirname + "/cache/autorep.json", JSON.stringify(oldData), "utf-8");
+					return writeFile(__dirname + "/autorep.json", JSON.stringify(oldData), "utf-8");
 				}
 				getShort.shorts.push({ in: shortin, out: shortout });
-				return writeFile(__dirname + "/cache/autorep.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Create autorep successfully", threadID, messageID));
+				return writeFile(__dirname + "/autorep.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Create autorep successfully", threadID, messageID));
 			}
 		});
 	}
