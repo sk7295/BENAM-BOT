@@ -6,7 +6,6 @@ module.exports.config = {
   hasPermission: 0,
   credits: "Jonell Magallanes",
   description: "Shows recent earthquakes",
-  usePrefix: false,
   commandCategory: "utility",
   usages: "[search query]",
   usePrefix: true,
@@ -16,7 +15,7 @@ module.exports.config = {
 module.exports.run = async ({ api, event, args }) => {
   try {
     let searchTerm = args.join(" ").toLowerCase(); // Join arguments to get the search query if provided
-
+    
     // Fetch the earthquake data
     let response = await axios.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');
     let { features } = response.data;
