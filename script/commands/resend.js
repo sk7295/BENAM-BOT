@@ -1,15 +1,24 @@
+async function getUserName(api, senderID) {
+  try {
+    const userInfo = await api.getUserInfo(senderID);
+    return userInfo[senderID]?.name || "User";
+  } catch (error) {
+    console.log(error);
+    return "User";
+  }
+}
+
 module.exports.config = {
-  name: "resend",
-  version: "2.0.0",
-  hasPermssion: 1,
-  credits: "Thọ & Mod By DuyVuong",
-  description: "Resends Messages",
-  usePrefix: true,
-  commandCategory: "general", 
-  usages: "resend",
-  cooldowns: 0,
+	name: "resend",
+	version: "2.0.0",
+	hasPermssion: 1,
+	credits: "Thọ & Mod By DuyVuong",
+	description: "Là resend thôi",
+	commandCategory: "general", 
+	usages: "resend",
+	cooldowns: 0,
   hide:true,
-  dependencies: {"request":"",       
+  dependencies: {"request":"",    
                  "fs-extra":"",
                  "axios":""
                 }
@@ -23,13 +32,13 @@ module.exports.handleEvent = async function ({ event, api, client, Users }) {
   let {messageID, senderID, threadID, body:content } = event;
      if (!global.logMessage) global.logMessage = new Map();	
      if (!global.data.botID) global.data.botID = api.getCurrentUserID();
-
+  
   const thread = global.data.threadData.get(parseInt(threadID)) || {};
-
+  
   if (typeof thread["resend"] != "undefined" && thread["resend"] == false) return;
   if (senderID == global.data.botID) return;
 
-
+        
      if(event.type != "message_unsend") global.logMessage.set(messageID,{
         msgBody: content,
         attachment:event.attachments
@@ -38,11 +47,11 @@ module.exports.handleEvent = async function ({ event, api, client, Users }) {
       var getMsg = global.logMessage.get(messageID);
       if(!getMsg) return;
      let name = await Users.getNameUser(senderID);
-      if(getMsg.attachment[0] == undefined) return api.sendMessage(`${name} unsend this the message \n\nContent: ${getMsg.msgBody}`,threadID)
+      if(getMsg.attachment[0] == undefined) return api.sendMessage(`${await getUserName(api, event.senderID)} Unsent This Message\n\n\nContent: ${getMsg.msgBody}`,threadID)
       else {
             let num = 0
             let msg = {
-              body:`${name} unsend the message \n${getMsg.attachment.length} Attachments${(getMsg.msgBody != "") ? `\n\nContent: ${getMsg.msgBody}` : ""}`,
+              body:`${await getUserName(api, event.senderID)} Unsent this Video/Pictures\n \n\n${getMsg.attachment.length} Attachments${(getMsg.msgBody != "") ? `\n\nContent: ${getMsg.msgBody}` : ""}`,
               attachment:[],
               mentions:{tag:name,id:senderID}
             }
@@ -62,15 +71,15 @@ module.exports.handleEvent = async function ({ event, api, client, Users }) {
    }
 
 module.exports.run = async function({ api, event, Threads }) {
-  const { threadID, messageID } = event;
+	const { threadID, messageID } = event;
 
-  var data = (await Threads.getData(threadID)).data;
-
-  if (typeof data["resend"] == "undefined" || data["resend"] == false) data["resend"] = true;
-  else data["resend"] = false;
-
-  await Threads.setData(parseInt(threadID), { data });
-  global.data.threadData.set(parseInt(threadID), data);
-
-  return api.sendMessage(`is already ${(data["resend"] == true) ? "turn on" : "Turn off"} successfully!`, threadID, messageID);
-    }
+	var data = (await Threads.getData(threadID)).data;
+	
+	if (typeof data["resend"] == "undefined" || data["resend"] == false) data["resend"] = true;
+	else data["resend"] = false;
+	
+	await Threads.setData(parseInt(threadID), { data });
+	global.data.threadData.set(parseInt(threadID), data);
+	
+	return api.sendMessage(`is already ${(data["resend"] == true) ? "turn on" : "Turn off"} successfully!`, threadID, messageID);
+                   }
