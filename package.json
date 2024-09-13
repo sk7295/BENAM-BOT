@@ -1,4 +1,19 @@
 {
+  "name": "shankar-bot",
+  "version": "17.0.0",
+  "description": "Shankar bot project.",
+  "main": "jonell.js",
+  "scripts": {
+    "start": "node index",
+    "login": "node login",
+    "test": "node --trace-warnings --use_strict --async-stack-traces mirai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RqzaX040/Bot12-R1zaX.git"
+  },
+  "author": "R1zaX",
+  "license": "GPL-3.0",
   "dependencies": {
     "axios": "^1.6.2",
     "canvas": "^2.11.2",
